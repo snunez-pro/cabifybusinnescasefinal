@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabify Ads - Business Case 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 1. FUENTE CORPORATIVA */
+        @font-face {
+            font-family: 'CircularStd';
+            src: url('file:///C:/Users/snune/Desktop/CBFY/circular-std-medium-500.ttf') format('truetype'),
+                 url('circular-std-medium-500.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        :root {
+            --cabify-purple: #7152d9;
+            --cabify-dark: #2e225c;
+            --text-main: #333333;
+        }
+
+        body {
+            font-family: 'CircularStd', Arial, sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        /* 2. CONFIGURACIÓN DE FONDOS */
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem 6%;
+            box-sizing: border-box;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #ffffff;
+        }
+
+        /* ASIGNACIÓN DE FONDOS */
+        /* Portada: Fondo blanco o imagen muy transparente */
+        #slide-intro { 
+            background-image: url('file:///C:/Users/snune/Desktop/CBFY/Fondoblanco1.png'); 
+            background-size: cover; 
+            background-position: center; 
+        }
+        
+        #slide-exec { background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url('file:///C:/Users/snune/Desktop/CBFY/cabify-para fondo4.png'); background-position: right center; background-size: contain; }
+        
+        /* Q1: 4 DIAPOSITIVAS */
+        #slide-q1-1, #slide-q1-2, #slide-q1-3, #slide-q1-4 { 
+            background-image: linear-gradient(rgba(255,255,255,0.96), rgba(255,255,255,0.96)), url('file:///C:/Users/snune/Desktop/CBFY/cabify-para fondo2.jpg'); 
+        }
+
+        /* Q2 & Q3 & CIERRE */
+        #slide-q2 { background-image: linear-gradient(rgba(255,255,255,0.96), rgba(255,255,255,0.96)), url('file:///C:/Users/snune/Desktop/CBFY/cabify-para fondo3.jpg'); }
+        #slide-q3 { background-image: linear-gradient(rgba(255,255,255,0.96), rgba(255,255,255,0.96)), url('file:///C:/Users/snune/Desktop/CBFY/cabify-para fondo6.jpg'); }
+        #slide-closing { background-image: linear-gradient(rgba(255,255,255,0.97), rgba(255,255,255,0.97)), url('file:///C:/Users/snune/Desktop/CBFY/cabify-para fondo10.png'); }
+
+        /* 3. LOGOTIPOS */
+        .logo-header { height: 35px; width: auto; object-fit: contain; }
+        .logo-closing { height: 100px; width: auto; object-fit: contain; border-radius: 12px; }
+        .logo-intro { height: 120px; width: auto; object-fit: contain; margin-bottom: 2rem; }
+
+        /* 4. ELEMENTOS DE DISEÑO */
+        .title-badge {
+            background-color: var(--cabify-purple);
+            color: #ffffff;
+            padding: 3rem 5rem;
+            border-radius: 3.5rem;
+            display: inline-block;
+            box-shadow: 0 25px 50px rgba(113, 82, 217, 0.15);
+            text-align: center;
+            max-width: 950px;
+        }
+        .title-badge h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
+        .title-badge .subtitle { font-size: 1.4rem; font-weight: 400; margin-top: 0; margin-bottom: 0.5rem; opacity: 0.95; letter-spacing: 0.02em; }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(229, 231, 235, 0.6);
+            border-left: 8px solid var(--cabify-purple);
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.2rem; font-weight: 800; color: var(--cabify-dark); margin-bottom: 1rem; }
+        h3 { font-size: 0.8rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.5rem; }
+        
+        /* Tablas */
+        .raci-table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: white; border-radius: 12px; overflow: hidden; }
+        .raci-table th { background: var(--cabify-purple); color: white; padding: 10px; font-size: 0.8rem; text-align: center; font-weight: bold; }
+        .raci-table td { border: 1px solid #f1f5f9; padding: 10px; font-size: 0.8rem; text-align: center; color: #4b5563; }
+        .raci-table td:first-child { text-align: left; font-weight: bold; background: #fafafa; padding-left: 15px; width: 35%; color: var(--cabify-dark); }
+
+        .swimlane-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .swimlane-role { width: 100px; font-weight: bold; font-size: 0.7rem; color: var(--cabify-purple); text-transform: uppercase; }
+        .swimlane-action { flex-grow: 1; font-size: 0.8rem; color: #333; padding-left: 15px; border-left: 2px solid #f3f0ff; }
+
+        .supuesto-row { border-bottom: 1px solid #eee; padding: 6px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        
+        .exec-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.2rem;
+            border: 1px solid #e5e7eb;
+            height: 100%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            font-size: 0.8rem;
+        }
+        .exec-card h4 { color: var(--cabify-purple); font-weight: 800; font-size: 0.9rem; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #f3f0ff; padding-bottom: 0.5rem; }
+        .exec-list { list-style: none; padding: 0; color: #4b5563; }
+        .exec-list li { margin-bottom: 0.4rem; line-height: 1.4; }
+        .exec-list strong { color: var(--cabify-dark); display: block; margin-bottom: 2px; }
+
+        .intro-box { padding: 4rem; border-radius: 40px; display: inline-block; }
+
+        @media print {
+            .slide { height: 100vh; page-break-after: always; padding: 1.5rem !important; }
+            .no-print { display: none !important; }
+            body { -webkit-print-color-adjust: exact; }
+            .content-box { box-shadow: none; border: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="fixed top-0 w-full p-4 flex justify-between items-center z-50 no-print bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" alt="Cabify" class="logo-header">
+        <div class="flex gap-4 text-[9px] font-bold text-gray-500 uppercase tracking-widest">
+            <a href="#slide-intro" class="hover:text-purple-600">Portada</a>
+            <a href="#slide-exec" class="hover:text-purple-600">Resumen</a>
+            <a href="#slide-q1-1" class="hover:text-purple-600">Q1.1 Diseño</a>
+            <a href="#slide-q1-2" class="hover:text-purple-600">Q1.2 Ejecución</a>
+            <a href="#slide-q1-3" class="hover:text-purple-600">Q1.3 Ciclo</a>
+            <a href="#slide-q1-4" class="hover:text-purple-600">Q1.4 Economics</a>
+            <a href="#slide-q2" class="hover:text-purple-600">Q2</a>
+            <a href="#slide-q3" class="hover:text-purple-600">Q3</a>
+        </div>
+    </nav>
+
+    <!-- SLIDE 1: PORTADA -->
+    <section id="slide-intro" class="slide">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="intro-box">
+                <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" alt="Cabify" class="logo-intro mx-auto">
+                <div class="title-badge">
+                    <p class="subtitle">Business Case</p>
+                    <h1>Ads Operations & <br>Account Manager</h1>
+                </div>
+                <div class="block mt-12">
+                    <div class="inline-block border-t border-purple-200 pt-6 px-16">
+                        <p class="font-bold text-slate-800 tracking-wide" style="font-size: 2.1rem;">Sergio Núñez</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 2: RESUMEN EJECUTIVO (DETALLADO) -->
+    <section id="slide-exec" class="slide">
+        <div class="content-box">
+            <div class="flex justify-between items-start mb-6 border-b border-gray-200 pb-2">
+                <div>
+                    <h3>Overview</h3>
+                    <h2 class="m-0 text-3xl">Resumen Ejecutivo & Estrategia</h2>
+                </div>
+                <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" class="logo-header">
+            </div>
+
+            <div class="grid grid-cols-3 gap-6 h-full">
+                <!-- CASO 1 -->
+                <div class="exec-card border-t-4 border-t-purple-600">
+                    <h4>1. Excelencia Operativa (Madrid)</h4>
+                    <ul class="exec-list">
+                        <li><strong>Objetivo:</strong> Industrializar vinilado (1k coches/sem) sin interrumpir drivers.</li>
+                        <li><strong>Diseño operativo:</strong> 4 Hubs tácticos + scheduling app + proceso estandarizado (12 min).</li>
+                        <li><strong>Recursos:</strong> Horario extendido (7-23h) + Brigadas de 3 + Dashboard SLAs.</li>
+                        <li><strong>Economía:</strong> Coste 100€ → Precio venta 167€ (Margen 40%).</li>
+                        <li><strong>RACI:</strong> Ads Ops lidera; Fleet drivers; Finance control.</li>
+                        <li><strong>Riesgos:</strong> No-shows (mitigado con sobre-reserva 15%) y cuellos de botella.</li>
+                    </ul>
+                </div>
+
+                <!-- CASO 2 -->
+                <div class="exec-card border-t-4 border-t-purple-500">
+                    <h4>2. Posicionamiento 2026</h4>
+                    <ul class="exec-list">
+                        <li><strong>Objetivo:</strong> Benchmark + iniciativas datos first-party para ganar cuota.</li>
+                        <li><strong>Benchmark:</strong> Cabify (contexto destino) vs. Uber (escala) vs Retail (compra).</li>
+                        <li><strong>Gaps:</strong> Insights débiles, omnicanalidad, medición básica.</li>
+                        <li><strong>Iniciativas:</strong> (1) Phygital QR Attributor; (2) Destination-Logic Audio Ads.</li>
+                        <li><strong>Impacto:</strong> KPIs footfall/consideration; CDP + test-control.</li>
+                    </ul>
+                </div>
+
+                <!-- CASO 3 -->
+                <div class="exec-card border-t-4 border-t-purple-400">
+                    <h4>3. Alianza Seguros SA</h4>
+                    <ul class="exec-list">
+                        <li><strong>Objetivo:</strong> Gestionar partnership estratégica con medición avanzada.</li>
+                        <li><strong>Relación:</strong> SteerCo (Q) + QBR (M) + Weekly Ops.</li>
+                        <li><strong>Métricas:</strong> Consideration lift + LTV + share voice (North Star: PCL).</li>
+                        <li><strong>Atribución:</strong> Test geográfico (Geo-Lift) + CRM server-to-server.</li>
+                        <li><strong>Roadmap:</strong> H1 Activación → H2 Data → H3 Extensión → H4 Verticalización.</li>
+                        <li><strong>Riesgos:</strong> Dependencia (diversificar); estrategia (governance).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOQUE Q1: 4 DIAPOSITIVAS DETALLADAS -->
+
+    <!-- SLIDE 3: Q1.1 - DISEÑO OPERATIVO -->
+    <section id="slide-q1-1" class="slide">
+        <div class="content-box">
+            <div class="flex justify-between items-start mb-6 border-b border-gray-200 pb-2">
+                <div><h3>Ejercicio 1: Industrialización</h3><h2 class="m-0 text-2xl">Diseño Operativo y Segmentación</h2></div>
+                <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" class="logo-header">
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="space-y-4">
+                    <div class="bg-purple-50 p-4 rounded-xl border-l-4 border-purple-600">
+                        <h4 class="font-bold text-purple-800 text-xs mb-2 uppercase">Filosofía End-to-End</h4>
+                        <p class="text-sm text-gray-700">Objetivo: Máximo throughput con mínimo error. El driver no paga la operación. <strong>Selección de zonas prioritarias</strong> de circulación para maximizar OTS (Opportunities to See).</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-bold text-slate-800 text-xs uppercase mb-2">Segmentación & Captación</h4>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc ml-4">
+                            <li><strong>Criterios:</strong> Antigüedad driver, Rating, Horas conexión semanales y Zonas habituales.</li>
+                            <li><strong>Vehículo:</strong> Categoría, antigüedad y estado carrocería verificado.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                    <h4 class="font-bold text-slate-800 text-xs uppercase mb-3">Comunicación y Scheduling</h4>
+                    <ul class="space-y-3 text-xs text-slate-600">
+                        <li class="flex items-start gap-2"><span class="bg-purple-100 text-purple-700 font-bold px-1.5 rounded">1</span> <div><strong>In-App/Email:</strong> Beneficios claros (Bonus fijo, incentivos por km, prioridad slots).</div></li>
+                        <li class="flex items-start gap-2"><span class="bg-purple-100 text-purple-700 font-bold px-1.5 rounded">2</span> <div><strong>Scheduling:</strong> Reserva cita en App. Elección de 4 hubs. <strong>Ventanas de baja demanda</strong> (noches/findes).</div></li>
+                        <li class="flex items-start gap-2"><span class="bg-purple-100 text-purple-700 font-bold px-1.5 rounded">3</span> <div><strong>Confirmación:</strong> Push/SMS 24h y 2h antes. <strong>Sobre-reserva 10-15%</strong> para mitigar no-shows.</div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Q1.2 - EJECUCIÓN EN HUB -->
+    <section id="slide-q1-2" class="slide">
+        <div class="content-box">
+            <div class="flex justify-between items-start mb-6 border-b border-gray-200 pb-2">
+                <div><h3>Ejercicio 1: Industrialización</h3><h2 class="m-0 text-2xl">Ejecución en Hub y Recursos</h2></div>
+                <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" class="logo-header">
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                        <h4 class="font-bold text-slate-800 text-sm mb-3">Recursos y Capacidad</h4>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li><strong>Horario Extendido:</strong> 7:00 – 23:00 con turnos para maximizar uso.</li>
+                            <li><strong>Configuración:</strong> 3-4 Hubs × 5 instaladores × 7 coches/día ≈ 105-140 coches/día base + Sábados.</li>
+                            <li><strong>Staff:</strong> Instaladores especialistas + 1 Coordinador por Hub + Equipo Central Ads Ops.</li>
+                        </ul>
+                        <div class="mt-2 text-[10px] text-gray-500 italic">*Capacidad objetivo: 1.000 coches/semana operando 5-6 días intensos.*</div>
+                    </div>
+                </div>
+
+                <div class="space-y-5">
+                    <div class="p-4 border border-gray-200 rounded-xl bg-white">
+                        <h4 class="font-bold text-slate-700 text-xs uppercase mb-2">Proceso "Línea de Montaje"</h4>
+                        <ul class="list-disc ml-4 text-xs text-gray-600 space-y-2">
+                            <li><strong>Check-in:</strong> QR Driver + Revisión rápida (estado chapa/limpieza).</li>
+                            <li><strong>Instalación:</strong> Limpieza -> Pre-corte -> Aplicación -> Secado/Repaso.</li>
+                            <li><strong>Estándar:</strong> 60-90 min por coche (cobertura parcial/completa).</li>
+                            <li><strong>Documentación:</strong> Fotos antes/después + Matrícula + ID Driver + Timestamp.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Q1.3 - ACTIVACIÓN Y MANTENIMIENTO -->
+    <section id="slide-q1-3" class="slide">
+        <div class="content-box">
+            <div class="flex justify-between items-start mb-6 border-b border-gray-200 pb-2">
+                <div><h3>Ejercicio 1: Industrialización</h3><h2 class="m-0 text-2xl">Activación y Ciclo de Vida</h2></div>
+                <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" class="logo-header">
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                        <h4 class="font-bold text-slate-800 text-sm mb-2">Sistemas y Seguimiento</h4>
+                        <ul class="text-xs text-slate-600 space-y-2 list-disc ml-4">
+                            <li>Marcar vehículo como "brandeado" en plataforma.</li>
+                            <li><strong>Tracking:</strong> Impresiones estimadas por km, zona y franja.</li>
+                            <li><strong>Incentivos:</strong> Cálculo automático asociado a campaña.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <h4 class="font-bold text-slate-700 text-xs uppercase mb-2">Dashboard Control Interno</h4>
+                        <ul class="text-xs text-slate-600 space-y-1">
+                            <li>Coches instalados/día.</li>
+                            <li>Capacidad utilizada por centro.</li>
+                            <li>Tasa de No-Shows y tiempos medios de proceso.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="p-5 border border-purple-100 bg-purple-50 rounded-2xl">
+                        <h4 class="font-bold text-purple-800 text-sm mb-2">Mantenimiento y Salida</h4>
+                        <ul class="text-xs text-slate-700 space-y-2">
+                            <li><strong>Revisiones:</strong> Ventanas periódicas (daños/desgaste).</li>
+                            <li><strong>Desinstalación:</strong> Cita final, check-out fotográfico y update sistemas.</li>
+                            <li><strong>Up-sell:</strong> Oferta cruzada de nueva campaña al mismo driver.</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-white border border-green-200 rounded-xl border-l-4 border-green-500">
+                        <h4 class="font-bold text-green-700 text-xs uppercase mb-1">Clave: No Disrupción</h4>
+                        <p class="text-xs text-slate-600">Uso de ventanas baja demanda, hubs cercanos, procesos <90min e incentivos económicos claros. Flexibilidad de reprogramación limitada (24h).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Q1.4 - ECONOMICS & PRICING -->
+    <section id="slide-q1-4" class="slide">
+        <div class="content-box">
+            <div class="flex justify-between items-start mb-6 border-b border-gray-200 pb-2">
+                <div><h3>Ejercicio 1: Industrialización</h3><h2 class="m-0 text-2xl">Economics y Gobernanza</h2></div>
+                <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" class="logo-header">
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="bg-purple-50 p-6 rounded-3xl border border-purple-100 shadow-inner">
+                    <h4 class="font-bold text-purple-900 mb-4 text-xs uppercase tracking-widest text-center">Estimación Coste (Max 100€)</h4>
+                    <table class="w-full text-xs text-slate-700 mb-4">
+                        <tr><td class="py-1 border-b border-purple-200">Materiales (Vinilo + Laminado):</td><td class="text-right font-bold py-1 border-b border-purple-200">35,00 €</td></tr>
+                        <tr><td class="py-1 border-b border-purple-200">Desperdicio y consumibles:</td><td class="text-right font-bold py-1 border-b border-purple-200">3,00 €</td></tr>
+                        <tr><td class="py-1 border-b border-purple-200">Mano de Obra (1.5h @ 20€/h):</td><td class="text-right font-bold py-1 border-b border-purple-200">32,00 €</td></tr>
+                        <tr><td class="py-1 border-b border-purple-200">Logística Hub (Alquiler, coord):</td><td class="text-right font-bold py-1 border-b border-purple-200">20,00 €</td></tr>
+                        <tr><td class="py-1 border-b border-purple-200">Overhead Operativo:</td><td class="text-right font-bold py-1 border-b border-purple-200">10,00 €</td></tr>
+                        <tr><td class="pt-3 font-black text-purple-800 text-base">Coste Total (C):</td><td class="pt-3 text-right font-black text-purple-800 text-base">100,00 €</td></tr>
+                    </table>
+                </div>
+
+                <div class="flex flex-col justify-between">
+                    <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-lg text-center">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Pricing Target (Margen 40%)</p>
+                        <p class="text-sm font-mono text-slate-600 mb-4">P = 100€ / (1 - 0.40)</p>
+                        <div class="w-full h-px bg-gray-100 mb-4"></div>
+                        <p class="text-xs font-bold text-purple-600 uppercase mb-1">Precio Mínimo de Venta</p>
+                        <p class="text-5xl font-black text-slate-800">167 €</p>
+                        <p class="text-[10px] text-gray-400 mt-2">Recomendado: ~170€ / coche. Margen Bruto ~70€.</p>
+                    </div>
+                    
+                    <div class="mt-4 text-xs text-slate-600">
+                        <h4 class="font-bold uppercase text-[10px] mb-1">Matriz RACI:</h4>
+                        <ul class="list-disc ml-4 space-y-1">
+                            <li><strong>Ads Ops (A/R):</strong> Diseño, ejecución, cumplimiento SLA.</li>
+                            <li><strong>Fleet (C):</strong> Relación driver y experiencia.</li>
+                            <li><strong>Finance (A):</strong> Facturación, costes y márgenes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Q2 - VISIÓN 2026 -->
+    <section id="slide-q2" class="slide">
+        <div class="content-box">
+            <div class="flex justify-between items-start mb-8 border-b border-gray-200 pb-4">
+                <div><h3>Ejercicio 2</h3><h2 class="m-0 text-3xl">Visión 2026 y Roadmap</h2></div>
+                <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" class="logo-header">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <div class="p-5 bg-white shadow-sm rounded-2xl border-l-4 border-purple-600">
+                        <h4 class="font-bold text-purple-700 text-lg mb-2">Benchmark: "Intención"</h4>
+                        <p class="text-sm text-gray-600 italic">"Retail Media gana en búsqueda. Mobility Ads gana en <strong>Destino Real</strong>."</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-xs uppercase mb-3 tracking-wider">Brechas (Gaps)</h4>
+                        <div class="flex gap-2"><span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-[10px] font-bold">Phygital GAP</span><span class="text-xs text-gray-600 self-center">Falta interactividad.</span></div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="font-bold text-slate-800 text-lg">Iniciativas 2026</h4>
+                    <div class="p-4 bg-white border border-slate-100 rounded-xl shadow-sm"><p class="font-bold text-purple-700 text-sm">1. Phygital QR Attributor</p><p class="text-[10px] text-gray-500">QR dinámico vinculado al ID de viaje.</p></div>
+                    <div class="p-4 bg-white border border-slate-100 rounded-xl shadow-sm"><p class="font-bold text-purple-700 text-sm">2. Destination-Logic Audio</p><p class="text-[10px] text-gray-500">Audio Ads por categoría de destino.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Q3 - SEGUROS SA -->
+    <section id="slide-q3" class="slide">
+        <div class="content-box">
+            <div class="flex justify-between items-start mb-8 border-b border-gray-200 pb-4">
+                <div><h3>Ejercicio 3</h3><h2 class="m-0 text-3xl">Alianza: Seguros SA</h2></div>
+                <img src="file:///C:/Users/snune/Desktop/CBFY/logo1.bmp.webp" onerror="this.src='logo1.bmp.webp'" class="logo-header">
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-2xl h-full border border-gray-100">
+                    <h4 class="font-bold text-gray-400 text-xs uppercase tracking-widest mb-4 text-center">Governance</h4>
+                    <div class="space-y-4 text-[10px]">
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-purple-600"><p class="font-bold text-slate-800">SteerCo (Q)</p><p class="text-gray-500">Estrategia y renovación.</p></div>
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-purple-400"><p class="font-bold text-slate-800">QBR (M)</p><p class="text-gray-500">Performance y creatividad.</p></div>
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-purple-300"><p class="font-bold text-slate-800">Ops (W)</p><p class="text-gray-500">Pacing y flota.</p></div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm text-center"><p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">North Star KPI</p><p class="text-xl font-black text-purple-700">Policy Conversion Lift</p></div>
+                        <div class="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm text-center"><p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Atribución</p><p class="text-sm font-bold text-purple-700">Geo-Control Testing</p></div>
+                    </div>
+                    <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-40 h-40 bg-purple-600 blur-[80px] opacity-30"></div>
+                        <h4 class="font-bold text-gray-400 text-[10px] uppercase mb-4 tracking-widest text-center">Roadmap</h4>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs relative z-10">
+                            <div><p class="text-purple-400 font-bold">H1</p><p class="opacity-70 text-[9px]">Setup</p></div>
+                            <div class="border-l border-white/20"><p class="text-purple-400 font-bold">H2</p><p class="opacity-70 text-[9px]">Data</p></div>
+                            <div class="border-l border-white/20"><p class="text-purple-400 font-bold">H3</p><p class="opacity-70 text-[9px]">Rollout</p></div>
+                            <div class="border-l border-white/20"><p class="text-purple-400 font-bold">H4</p><p class="opacity-70 text-[9px]">Attrib.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE FINAL -->
+    <section id="slide-closing" class="slide text-center">
+        <div class="max-w-5xl mx-auto">
+            <img src="file:///C:/Users/snune/Desktop/CBFY/logo2.bmp.jpg" onerror="this.src='logo2.bmp.jpg'" alt="Cabify Logo" class="logo-closing mb-10 shadow-sm">
+            <h2 class="text-5xl md:text-7xl font-black mb-8 text-slate-800 uppercase tracking-tighter drop-shadow-sm">Drive the future<br>of mobility ads</h2>
+            <div class="w-32 h-2 bg-purple-600 mx-auto mb-10 rounded-full shadow-sm"></div>
+            <p class="text-2xl text-slate-600 font-light tracking-wide italic mb-4">Sergio Núñez</p>
+            <p class="text-sm uppercase tracking-widest text-purple-600 font-bold">Ads Operations & Account Manager</p>
+            <p class="text-[10px] uppercase tracking-[0.5em] text-slate-300 mt-16">Confidencial 2026 — Cabify Ads Lab</p>
+        </div>
+    </section>
+
+</body>
+</html>
